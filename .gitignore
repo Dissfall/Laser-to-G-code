@@ -1,0 +1,7 @@
+# Ingore intellj IDEA files
+.idea
+
+cmake-build-*
+
+# G-code files
+*.gcode
