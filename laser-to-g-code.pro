@@ -6,6 +6,8 @@
 
 QT       += core gui
 
+QMAKE_CXXFLAGS += -std=c++11
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = laser-to-g-code
@@ -25,10 +27,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    imageviewer.cpp \
+    capture.cpp \
+    converter.cpp \
+    lightfinder.cpp \
+    circlevisualizer.cpp \
+    recorder.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    imageviewer.h \
+    capture.h \
+    converter.h \
+    lightfinder.h \
+    circlevisualizer.h \
+    recorder.h
 
 FORMS += \
         mainwindow.ui
+
+INCLUDEPATH += /usr/local/include/opencv
+LIBS += -L/usr/local/lib -lopencv_calib3d -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_video -lopencv_videoio -lopencv_videostab

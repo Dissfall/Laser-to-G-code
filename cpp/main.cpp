@@ -1,3 +1,4 @@
+
 #include "opencv2/objdetect.hpp"
 #include "opencv2/opencv.hpp"
 #include <fstream>
@@ -6,7 +7,7 @@ using namespace cv;
 using namespace std;
 
 // Laser color
-int sensitivity = 90;
+int sensitivity = 70;
 const Scalar lColor(60 - sensitivity, 100, 50);  // lower bound
 const Scalar hColor(60 + sensitivity, 255, 255); // upper bound
 
@@ -33,7 +34,7 @@ int main() {
     fout << "%\n";                                          //  |- Setup G-code file
     fout << "G90 G40 G17\n";                                //  |
 
-    capture.open(0);
+    capture.open(1);                                        // !!! DONT FORGET - camera select
     if (!capture.isOpened()) {
         cout << "Cannot open video stream";
     }
@@ -42,20 +43,20 @@ int main() {
         capture.read(frame);
 
 
-        frame.convertTo(colorized, CV_8UC1, 0.4, 0);
+        frame.convertTo(colorized, CV_8UC1, 0.8, 0);
 //        imshow("colorized", colorized);
         cvtColor(colorized, HSV, CV_BGR2HSV);
         inRange(HSV, lColor, hColor, mask);
 
-//        imshow("dirty", mask);
-        erode(mask, mask, Mat(), Point(-1, -1), 2, 1, 1);   //   |
-        dilate(mask, mask, Mat(), Point(-1, -1), 1, 1, 1);  //   |- Cleaning ang blurring
+        imshow("dirty", mask);
+        erode(mask, mask, Mat(), Point(-1, -1), 1, 1, 1);   //   |
+        dilate(mask, mask, Mat(), Point(-1, -1), 4, 1, 1);  //   |- Cleaning ang blurring
         GaussianBlur(mask, mask, cv::Size(7, 7), 2, 2);     //   |
-//        imshow("clean", mask);
+        imshow("clean", mask);
 
         vector<Vec3f> circles;
 
-        HoughCircles(mask, circles, CV_HOUGH_GRADIENT, 1, frame.size().width/8, 100, 10, 15, 100);
+        HoughCircles(mask, circles, CV_HOUGH_GRADIENT, 1, frame.size().width/8, 100, 20, 25, 500);
 
         if (circles.size() > 0) {
             for (size_t currentCircle = 0; currentCircle < circles.size(); ++currentCircle) {

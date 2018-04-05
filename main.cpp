@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QtWidgets>
+#include <opencv2/opencv.hpp>
+
 
 int main(int argc, char *argv[])
 {
@@ -9,3 +12,5 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
+
