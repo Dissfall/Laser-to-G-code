@@ -37,7 +37,7 @@ void LightFinder::process(cv::Mat frame)
         cv::dilate(frame, frame, cv::Mat(), cv::Point(-1, -1), 4, 1, 1);  //   |- Cleaning ang blurring
         cv::GaussianBlur(frame, frame, cv::Size(7, 7), 2, 2);             //   |
 
-        cv::HoughCircles(frame, circles, CV_HOUGH_GRADIENT, 1, frame.size().width/8, 100, 20, 25, 500);
+        cv::HoughCircles(frame, circles, CV_HOUGH_GRADIENT, 1, frame.size().width/8, circleSens, 20, 0, 0);
 
         emit matReady(c_frame, circles);
 
@@ -79,4 +79,9 @@ void LightFinder::setSensitivity(int sens)
 {
     sensitivity = sens;
     qDebug() << sensitivity;
+}
+
+void LightFinder::setCircleSens(int sens)
+{
+    circleSens = sens;
 }

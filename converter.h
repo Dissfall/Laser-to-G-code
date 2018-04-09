@@ -12,6 +12,7 @@ class Converter : public QObject
 {
     Q_OBJECT
 
+    QSize viewerSize = QSize(1, 1);
     QBasicTimer m_timer;
     cv::Mat m_frame;
     bool stream = true;
@@ -21,6 +22,7 @@ public:
     void setMode(bool mode);
     Q_SIGNAL void imageReady(const QImage &);
     Q_SLOT void processFrame(const cv::Mat & frame);
+    Q_SLOT void setViewerSize(QSize size);
 
 protected:
     static void matDeleter(void *mat);

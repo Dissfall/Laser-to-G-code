@@ -19,7 +19,12 @@ void Converter::getFrame(const cv::Mat &frame)
 
 void Converter::process(cv::Mat frame)
 {
-    cv::resize(frame, frame, cv::Size(), 0.6, 0.6, cv::INTER_AREA);
+    if ((viewerSize.width() / static_cast<float>(frame.cols)) < viewerSize.height() / static_cast<float>(frame.rows))
+    {
+        cv::resize(frame, frame, cv::Size(), viewerSize.width() / static_cast<float>(frame.cols), viewerSize.width() / static_cast<float>(frame.cols), cv::INTER_AREA);
+    } else {
+        cv::resize(frame, frame, cv::Size(), viewerSize.height() / static_cast<float>(frame.rows), viewerSize.height() / static_cast<float>(frame.rows), cv::INTER_AREA);
+    }
     cv::cvtColor(frame, frame, CV_BGR2RGB);
     const QImage image(frame.data, frame.cols, frame.rows, frame.step,
                        QImage::Format_RGB888, &matDeleter, new cv::Mat(frame));
@@ -32,7 +37,6 @@ void Converter::timerEvent(QTimerEvent *event)
     if (event->timerId() != m_timer.timerId()) return;
     process(m_frame);
     m_frame.release();
-    m_timer.stop();
 }
 
 void Converter::setMode(bool mode)
@@ -43,4 +47,10 @@ void Converter::setMode(bool mode)
 void Converter::processFrame(const cv::Mat &frame)
 {
     if (stream) process(frame); else getFrame(frame);
+    m_timer.stop();
+}
+
+void Converter::setViewerSize(QSize size)
+{
+    viewerSize = size;
 }

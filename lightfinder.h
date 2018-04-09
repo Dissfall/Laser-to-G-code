@@ -16,6 +16,7 @@ class LightFinder : public QObject
     cv::Mat m_frame;
     bool stream = true;
     int sensitivity = 70;
+    int circleSens = 100;
     const cv::Scalar *lColor = new cv::Scalar(60 - sensitivity, 100, 50);  // lower bound
     const cv::Scalar *hColor = new cv::Scalar(60 + sensitivity, 255, 255); // upper bound
     const double stickSpace = 100;
@@ -30,6 +31,7 @@ public:
     Q_SIGNAL void matReady(const cv::Mat &, const std::vector<cv::Vec3f> &);
     Q_SLOT void processFrame(const cv::Mat & frame);
     Q_SLOT void setSensitivity(int sens);
+    Q_SLOT void setCircleSens(int sens);
 
 protected:
     void getFrame(const cv::Mat & frame);

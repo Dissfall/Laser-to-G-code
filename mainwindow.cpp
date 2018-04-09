@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     CircleVisualizer *visualizer = new CircleVisualizer();
     Converter *converter = new Converter;
 
+    converter->setViewerSize(ui->videoView->size());
+
     connect(capture, SIGNAL(matReady(cv::Mat)), finder, SLOT(processFrame(cv::Mat)));
     connect(finder, SIGNAL(matReady(cv::Mat, std::vector<cv::Vec3f>)), visualizer, SLOT(processFrame(cv::Mat, std::vector<cv::Vec3f>)));
     connect(finder, SIGNAL(matReady(cv::Mat, std::vector<cv::Vec3f>)), ui->recorder, SLOT(addCircles(cv::Mat, std::vector<cv::Vec3f>)));
@@ -42,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(converter, SIGNAL(imageReady(QImage)), ui->videoView, SLOT(setImage(QImage)));
 
     connect(ui->sensitivity, SIGNAL(valueChanged(int)), finder, SLOT(setSensitivity(int)));
+    connect(ui->circleSens, SIGNAL(valueChanged(int)), finder, SLOT(setCircleSens(int)));
     connect(ui->finderStartapIgnore, SIGNAL(clicked(bool)), ui->startapIgnoreTime, SLOT(setEnabled(bool)));
     connect(ui->recorderShow, SIGNAL(currentIndexChanged(int)), ui->recorder, SLOT(setTableMode(int)));
 
@@ -76,23 +79,3 @@ void MainWindow::setDefSettings(QSettings *settings)
     settings->sync();
 }
 
-//void MainWindow::setupTable(int index)
-//{
-//    if (index == 0)
-//    {
-//        ui->table->setColumnCount(1);
-//        ui->table->setHorizontalHeaderLabels(QStringList() << tr("code"));
-//        for (int c = 0; c < ui->table->horizontalHeader()->count(); ++c)
-//        {
-//            ui->table->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
-//        }
-//    } else
-//    {
-//        ui->table->setColumnCount(2);
-//        ui->table->setHorizontalHeaderLabels(QStringList() << tr("X") << tr("Y"));
-//        for (int c = 0; c < ui->table->horizontalHeader()->count(); ++c)
-//        {
-//            ui->table->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
-//        }
-//    }
-//}

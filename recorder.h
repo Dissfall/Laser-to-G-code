@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QTableWidget>
+#include <QtWidgets>
 
 #include "opencv2/objdetect.hpp"
 #include "opencv2/opencv.hpp"

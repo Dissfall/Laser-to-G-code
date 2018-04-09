@@ -4,19 +4,30 @@
 
 Recorder::Recorder(QWidget *parent) : QTableWidget(parent)
 {
-
+    this->setAutoScroll(true);
 }
 
 void Recorder::addCircles(cv::Mat, std::vector<cv::Vec3f> circles)
 {
-    for (int i = 0; i <= circles.size(); i++)
+    if (circles.size() > 0)
     {
-        circleStorage[currentCircle] = circles[i];
-        currentCircle++;
-        qDebug() << "new";
-    }
-    updateTable();
+        circleStorage.insert(circleStorage.end(), circles.begin(), circles.end());
+        currentCircle += circles.size();
 
+        if (currentMode == 0)
+        {
+
+        } else
+        {
+            for (int i = 0; i <= circles.size(); i++)
+            {
+                this->insertRow(this->rowCount());
+                this->setItem(this->rowCount() - 1, 0, new QTableWidgetItem(QString::number(circles[i][0])));
+                this->setItem(this->rowCount() - 1, 1, new QTableWidgetItem(QString::number(circles[i][1])));
+
+            }
+        }
+    }
 }
 
 void Recorder::updateTable()

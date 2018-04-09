@@ -3,6 +3,9 @@
 
 #include <QtWidgets>
 
+#include "opencv2/objdetect.hpp"
+#include "opencv2/opencv.hpp"
+
 class ImageViewer : public QWidget
 {
     Q_OBJECT
