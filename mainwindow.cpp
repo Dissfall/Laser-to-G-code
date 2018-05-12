@@ -43,10 +43,27 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(visualizer, SIGNAL(matReady(cv::Mat)), converter, SLOT(processFrame(cv::Mat)));
     connect(converter, SIGNAL(imageReady(QImage)), ui->videoView, SLOT(setImage(QImage)));
 
+    connect(ui->startRecord, &QPushButton::clicked, ui->recorder, &Recorder::enableRecord);
+    connect(ui->stopRecord, &QPushButton::clicked, ui->recorder, &Recorder::disableRecord);
+    connect(ui->clearRecorder, &QPushButton::clicked, ui->recorder, &Recorder::clearRecord);
+    connect(ui->exportBtn, &QPushButton::clicked, ui->recorder, &Recorder::saveFile);
+
     connect(ui->sensitivity, SIGNAL(valueChanged(int)), finder, SLOT(setSensitivity(int)));
     connect(ui->circleSens, SIGNAL(valueChanged(int)), finder, SLOT(setCircleSens(int)));
     connect(ui->finderStartapIgnore, SIGNAL(clicked(bool)), ui->startapIgnoreTime, SLOT(setEnabled(bool)));
     connect(ui->recorderShow, SIGNAL(currentIndexChanged(int)), ui->recorder, SLOT(setTableMode(int)));
+    connect(ui->showBitmap, &QPushButton::clicked, [=]()
+    {
+        BitmapViewer *bitmapViewer = new BitmapViewer();
+        Converter *bitmapConverter = new Converter;
+
+        ui->showBitmap->setEnabled(false);
+        connect(finder, &LightFinder::bitmapReady, bitmapConverter, &Converter::processFrame);
+//        connect(converter, &Converter::imageReady, bitmapViewer, &BitmapViewer::setImage);
+
+        bitmapViewer->show();
+    }
+    );
 
     capture->start(1);
 

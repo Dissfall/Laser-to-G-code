@@ -40,7 +40,7 @@
      <attribute name="title">
       <string>Record tools</string>
      </attribute>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="startRecord">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -53,7 +53,7 @@
        <string>Record</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="stopRecord">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -66,7 +66,7 @@
        <string>Stop</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="clearRecorder">
       <property name="geometry">
        <rect>
         <x>200</x>
@@ -79,7 +79,7 @@
        <string>Clear</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="exportBtn">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -124,12 +124,12 @@
       </property>
       <item>
        <property name="text">
-        <string>G-code</string>
+        <string>Coordinates</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Coordinates</string>
+        <string>G-code</string>
        </property>
       </item>
      </widget>
@@ -232,7 +232,7 @@
        <string>Laser color:</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="showBitmap">
       <property name="geometry">
        <rect>
         <x>410</x>

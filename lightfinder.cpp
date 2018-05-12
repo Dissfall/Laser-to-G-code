@@ -33,6 +33,8 @@ void LightFinder::process(cv::Mat frame)
         cv::cvtColor(frame, frame, CV_BGR2HSV);
         cv::inRange(frame, *lColor, *hColor, frame);
 
+        emit bitmapReady(frame);
+
         cv::erode(frame, frame, cv::Mat(), cv::Point(-1, -1), 1, 1, 1);   //   |
         cv::dilate(frame, frame, cv::Mat(), cv::Point(-1, -1), 4, 1, 1);  //   |- Cleaning ang blurring
         cv::GaussianBlur(frame, frame, cv::Size(7, 7), 2, 2);             //   |

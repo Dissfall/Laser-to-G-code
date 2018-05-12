@@ -29,6 +29,7 @@ public:
     explicit LightFinder(int sens, bool SI, double SIT, QObject *parent = 0);
     void setMode(bool mode);
     Q_SIGNAL void matReady(const cv::Mat &, const std::vector<cv::Vec3f> &);
+    Q_SIGNAL void bitmapReady(const cv::Mat &);
     Q_SLOT void processFrame(const cv::Mat & frame);
     Q_SLOT void setSensitivity(int sens);
     Q_SLOT void setCircleSens(int sens);
